@@ -49,6 +49,7 @@ renderPage = (url, filename, callback) ->
 ###
  Resize image size
 ###
+
 resizeImageFile = (srcFile, dstFile, imageSize, callback) ->
   console.log "resizing #{srcFile} to #{dstFile}..."
   page = webpage.create()
@@ -61,6 +62,7 @@ resizeImageFile = (srcFile, dstFile, imageSize, callback) ->
   page.onLoadFinished = ->
     page.render(dstFile)
     callback(dstFile)
+
 
 ###
  Upload file using form
@@ -83,10 +85,13 @@ uploadFile = (file, form, callback) ->
       page.onLoadFinished = null
       console.log "uploading done."
       loc = page.content.match(/<Location>(http[^<]+)<\/Location>/)
+      all = page.content
       if loc
+        console.log all
         console.log "image location: #{loc[1]}"
         callback loc[1]
       else
+        console.log all
         callback null
       page.release()
 
