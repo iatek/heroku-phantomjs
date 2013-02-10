@@ -62,6 +62,12 @@ renderPage = (url, filename, callback) ->
         page.viewportSize =
           width: 1024
           height: 1536
+
+        page.clipRect =
+          top: 0
+          left: 0
+          width: 1024
+          height: 1536
       page.render(filename)
       callback(filename)
     , 1000
