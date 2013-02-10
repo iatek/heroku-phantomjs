@@ -23,6 +23,19 @@ loadPage = (url, callback) ->
   page = webpage.create()
   page.viewportSize = screenSize
   page.settings.userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3'
+  viewportTag = page.evaluate(->
+    findViewport = ->
+      metaCollection = document.getElementsByTagName("meta")
+      i = 0
+      while i < metaCollection.length
+        nameAttribute = metaCollection[i].name.search(/viewport/)
+        viewport = 1  unless nameAttribute is -1
+        i++
+    viewport = 0
+    findViewport()
+    viewport
+  )
+  console.log viewportTag
   page.clipRect = { top: 0, left: 0, width: screenSize.width, height: screenSize.height }
   page.onAlert = (msg) ->
     console.log msg
