@@ -23,21 +23,6 @@ loadPage = (url, callback) ->
   page = webpage.create()
   page.viewportSize = screenSize
   page.settings.userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3'
-  viewportTag = page.evaluate(->
-    viewport = ""
-    findViewport = ->
-      viewport = 0
-      metaCollection = document.getElementsByTagName("meta")
-      i = 0
-      while i < metaCollection.length
-        nameAttribute = metaCollection[i].name.search(/viewport/)
-        viewport = 1 unless nameAttribute is "-1"
-        i++
-      viewport
-    findViewport()
-    viewport
-  )
-  console.log viewportTag
   page.clipRect = { top: 0, left: 0, width: screenSize.width, height: screenSize.height }
   page.onAlert = (msg) ->
     console.log msg
@@ -57,7 +42,22 @@ renderPage = (url, filename, callback) ->
   loadPage url, (page) ->
     return callback(null) unless page
     setTimeout ->
-      page.evaluate -> document.documentElement.style.backgroundColor = '#fff'
+      viewportTag = page.evaluate(->
+        document.documentElement.style.backgroundColor = '#fff'
+        viewport = ""
+        findViewport = ->
+          viewport = 0
+          metaCollection = document.getElementsByTagName("meta")
+          i = 0
+          while i < metaCollection.length
+            nameAttribute = metaCollection[i].name.search(/viewport/)
+            viewport = 1 unless nameAttribute is "-1"
+            i++
+          viewport
+        findViewport()
+        viewport
+      )
+      console.log viewportTag
       page.render(filename)
       callback(filename)
     , 1000
