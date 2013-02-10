@@ -51,7 +51,7 @@ renderPage = (url, filename, callback) ->
           i = 0
           while i < metaCollection.length
             nameAttribute = metaCollection[i].name.search(/viewport/)
-            viewport = 1 unless nameAttribute is "-1"
+            viewport = 1 unless nameAttribute is -1
             i++
           viewport
         findViewport()
