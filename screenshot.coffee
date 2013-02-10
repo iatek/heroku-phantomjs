@@ -66,14 +66,14 @@ renderPage = (url, filename, callback) ->
       console.log docWidth
       if viewportTag is 0
         page.viewportSize =
-          width: docWidth
-          height: 320/480*docWidth
+          width: docWidth+10
+          height: 480/320*docWidth
 
         page.clipRect =
           top: 0
           left: 0
-          width: docWidth
-          height: 320/480*docWidth
+          width: docWidth+10
+          height: 480/320*docWidth
       page.render(filename)
       callback(filename)
     , 1000
