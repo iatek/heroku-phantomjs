@@ -24,6 +24,7 @@ loadPage = (url, callback) ->
   page.viewportSize = screenSize
   page.settings.userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3'
   viewportTag = page.evaluate(->
+    viewport = 0
     findViewport = ->
       metaCollection = document.getElementsByTagName("meta")
       i = 0
@@ -31,7 +32,6 @@ loadPage = (url, callback) ->
         nameAttribute = metaCollection[i].name.search(/viewport/)
         viewport = 1  unless nameAttribute is -1
         i++
-    viewport = 0
     findViewport()
     viewport
   )
