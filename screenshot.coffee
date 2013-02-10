@@ -32,6 +32,7 @@ loadPage = (url, callback) ->
         nameAttribute = metaCollection[i].name.search(/viewport/)
         viewport = 1  unless nameAttribute is -1
         i++
+      viewport
     findViewport()
     viewport
   )
