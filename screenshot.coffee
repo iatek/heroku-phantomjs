@@ -57,17 +57,23 @@ renderPage = (url, filename, callback) ->
         findViewport()
         viewport
       )
+      docWidth = page.evaluate(->
+        docWidth = 320
+        docWidth = Math.max(document.documentElement["clientWidth"], document.body["scrollWidth"], document.documentElement["scrollWidth"], document.body["offsetWidth"], document.documentElement["offsetWidth"])
+        docWidth
+      )
       console.log viewportTag
+      console.log docWidth
       if viewportTag is 0
         page.viewportSize =
-          width: 1024
-          height: 1536
+          width: docWidth
+          height: 320/480*docWidth
 
         page.clipRect =
           top: 0
           left: 0
-          width: 1024
-          height: 1536
+          width: docWidth
+          height: 320/480*docWidth
       page.render(filename)
       callback(filename)
     , 1000
@@ -161,8 +167,8 @@ connect (conn) ->
   return console.log("connection failure.") unless conn
   conn.onRenderRequest = (request) ->
     filename = Math.random().toString(36).substring(2)
-    captureFile = "/tmp/#{filename}.jpg"
-    imageFile = "/tmp/#{filename}_#{imageSize.width}x#{imageSize.height}.jpg"
+    captureFile = "/tmp/#{filename}.png"
+    imageFile = "/tmp/#{filename}_#{imageSize.width}x#{imageSize.height}.png"
     renderPage request.url, captureFile, (captureFile) ->
       console.log "captureFile #{captureFile}"
       resizeImageFile captureFile, imageFile, imageSize, (imageFile) ->
