@@ -58,6 +58,10 @@ renderPage = (url, filename, callback) ->
         viewport
       )
       console.log viewportTag
+      if viewportTag is 0
+        page.viewportSize =
+          width: 1024
+          height: 1536
       page.render(filename)
       callback(filename)
     , 1000
