@@ -8,11 +8,11 @@ if sys.args.length < 2
 
 pushServerUrl = sys.args[1]
 screenSize =
-  width : sys.args[2] || 1024
-  height : sys.args[3] || 768
+  width : sys.args[2] || 320
+  height : sys.args[3] || 480
 imageSize =
-  width : sys.args[4] || 400
-  height : sys.args[5] || 300
+  width : sys.args[4] || 320
+  height : sys.args[5] || 480
 
 renderingWait = Number(sys.args[6] || 1000)
 
@@ -22,6 +22,7 @@ renderingWait = Number(sys.args[6] || 1000)
 loadPage = (url, callback) ->
   page = webpage.create()
   page.viewportSize = screenSize
+  page.settings.userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3'
   page.clipRect = { top: 0, left: 0, width: screenSize.width, height: screenSize.height }
   page.onAlert = (msg) ->
     console.log msg
